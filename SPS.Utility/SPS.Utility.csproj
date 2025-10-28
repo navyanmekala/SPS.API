@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SPS.DAL\SPS.DAL.csproj" />
-    <ProjectReference Include="..\SPS.Models\SPS.Models.csproj" />
-  </ItemGroup>
-
 </Project>

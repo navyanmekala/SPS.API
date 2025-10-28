@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SPS.DAL.Abstractions
+namespace SPS.Business.Abstractions
 {
-    public interface ISPSDataRepository
+    public interface ISPSDataService
     {
         Task<List<Roles>> GetRoles();
     }
