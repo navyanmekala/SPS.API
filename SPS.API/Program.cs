@@ -1,3 +1,8 @@
+using SPS.Business.Abstractions;
+using SPS.Business.Implementations;
+using SPS.DAL.Abstractions;
+using SPS.DAL.Implementations;
+
 namespace SPS.API
 {
     public class Program
@@ -7,28 +12,30 @@ namespace SPS.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllers();
+
+            // Add Swagger
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            // Register your dependencies (if any)
+            builder.Services.AddScoped<ISPSDataRepository, SPSDataRepository>();
+            builder.Services.AddScoped<ISPSDataService, SPSDataService>();
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
 
             app.UseAuthorization();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapControllers();
 
             app.Run();
         }
